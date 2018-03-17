@@ -1,0 +1,41 @@
+html,body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	min-width: 1200px;
+}
+a {
+	text-decoration: none;
+	color: #000000;
+}
+.icon {
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	margin-right: 10px;
+}
+.icon-man {
+	background: url(../assets/image/man.png) no-repeat;
+	background-size: 100% 100%;
+}
+.icon-phone {
+	background: url(../assets/image/phone.png) no-repeat;
+	background-size: 100% 100%;
+}
+.icon-email {
+	background: url(../assets/image/email.png) no-repeat;
+	background-size: 100% 100%;
+}
+.icon-realname {
+	background: url(../assets/image/realname.png) no-repeat;
+	background-size: 100% 100%;
+}
+.icon-good {
+	background: url(../assets/image/good.png) no-repeat;
+	background-size: 100% 100%;
+}
+.icon-comment {
+	background: url(../assets/image/comment.png) no-repeat;
+	background-size: 100% 100%;
+}
