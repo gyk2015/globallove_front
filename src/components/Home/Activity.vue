@@ -4,13 +4,13 @@
 			<li v-for="item in activityList" class="activity-list">	
 				<el-card class="box-card">
 					<div class="content-left">
-							<p>活动名称：{{item.name}}</p>
-							<p>活动时间：{{item.time}}</p>
-							<p>活动简介：{{item.intro}}</p>		
+							<p>活动名称：{{item.activeid.title}}</p>
+							<p>活动时间：{{item.activeid.starttime}}-{{item.activeid.endtime}}</p>
+							<p>活动简介：{{item.activeid.intro}}</p>		
 					</div>
 					<div class="content-right">
-						<p class="activity-status">已结束</p>
-						<router-link to="/base/home/photo">查看详情</router-link>
+<!-- 						<p class="activity-status">已结束</p> -->
+						<router-link :to="'/base/activeDetail?id='+item.activeid.id">查看详情</router-link>
 					</div>
 				</el-card>	
 			</li>
@@ -27,20 +27,32 @@
 	  	name: 'Mood',
 	  	data() {
 	      	return {
-	      		activityList: [
-	      			{
-	      				name: '一夜情',
-	      				time: '2018-1-8',
-	      				intro: '这是一夜情活动'
-	      			},
-	      			{
-	      				name: '一夜情',
-	      				time: '2018-1-8',
-	      				intro: '这是一夜情活动'
-	      			} 
-	      		]
+	      		activityList: []
 	      	}
-	    }
+	    },
+	    mounted: function(){
+	    	this.initActive();
+		},
+		methods: {
+			initActive() {
+				this.$http({
+					method: 'get',
+					url: 'activeEnroll/getEnrollActive',   	
+					params: {
+					    "page": 1,
+					    "pageSize": 5
+					}        			
+				}).then((response)=>{
+					if(response && response.data.status == 'SUCCESS') {
+						this.activityList = response.data.object.objects;
+					}else {
+						this.$message(response.data.message);
+					}
+				}).catch((err)=>{  
+					
+				});
+			}
+		}
 	}
 </script>
 

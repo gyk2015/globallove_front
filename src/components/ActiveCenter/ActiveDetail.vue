@@ -11,7 +11,8 @@
 				<p><i class="el-icon-phone-outline active-icon"></i>联系方式：{{active.contact}}</p>
 				<p><i class="el-icon-time active-icon"></i>报名截止时间：{{active.enddate}}</p>
 				<p class="price">￥{{active.pay}}</p>
-				<el-button type="danger" plain @click="toActiveEnroll(active.id)">立即参加</el-button>
+				<el-button type="danger" plain @click="toActiveEnroll(active.id)" v-if="!isEnroll">立即参加</el-button>
+				<el-button type="danger" plain v-else disabled>已报名</el-button>
 			</div>
 		</div>
 		<div class="active-info">
@@ -43,6 +44,7 @@
 	  	data() {
 	      	return {
 	      		active: {},
+	      		isEnroll: false,
 	      		participantList: [
 	      			{
 	      				img: person1
@@ -67,7 +69,8 @@
 	    },
 	    mounted: function(){
 	    	this.initActive();
-	    	this.initActiveEnrollUser();
+	    	this.initIsEnroll();
+	    	// this.initActiveEnrollUser();
 		},
 	    methods: {
 	    	initActive() {
@@ -87,6 +90,28 @@
 					
 				});
 	    	},
+	    	initIsEnroll() {
+	    		this.$http({
+					method: 'get',
+					url: 'activeEnroll/getIsEnroll',
+					params: {
+					    "activeid": this.$route.query.id
+					}        	   			
+				}).then((response)=>{
+					if(response && response.data.status == 'SUCCESS') {
+						if(response.data.object == null) {
+							this.isEnroll = false;
+						}else {
+							this.isEnroll = true;
+						}
+						console.log(this.isEnroll);
+					}else {
+						this.$message(response.data.message);
+					}
+				}).catch((err)=>{  
+					
+				});
+	    	},
 	    	initActiveEnrollUser() {
 				this.$http({
 					method: 'get',
@@ -98,7 +123,12 @@
 					}        	   			
 				}).then((response)=>{
 					if(response && response.data.status == 'SUCCESS') {
-						// this.active = response.data.object;
+						if(response.data.object == null) {
+							this.isEnroll = false;
+						}else {
+							this.isEnroll = true;
+						}
+						console.log(this.isEnroll);
 					}else {
 						this.$message(response.data.message);
 					}
