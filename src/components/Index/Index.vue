@@ -32,41 +32,26 @@
 				<div class="main__title">
 					<p>我的推荐</p>
 				</div>
-				<el-row :gutter="30" v-for="item in 4">
-				  	<el-col :span="12"><div class="grid-content">
-				  		<div class="person-img">
-				  			<img src="../../assets/image/person1.jpg" alt="">
+				<el-row :gutter="30" v-for="item in mateList">
+				  	<el-col :span="12">
+				  		<div class="grid-content">
+					  		<div class="person-img">
+					  			<img src="../../assets/image/person1.jpg" alt="">
+					  		</div>
+					  		<div class="person-info">
+					  			<p class="person-info__name">{{item[0].accountid.username}}</p>
+								<span class="person-info__detail">{{item[0].age}}</span>
+								<span> | </span>
+								<span class="person-info__detail">{{item[0].workplace}}</span>
+								<span> | </span>
+								<span class="person-info__detail">{{item[0].education}}</span>
+								<span> | </span>
+								<span class="person-info__detail">{{item[0].salary}}元</span>
+								<p class="person-info__detail">哎哎哎哎哎哎我哎哎哎啊 </p>
+								<router-link :to="'/base/other/personalData?id='+item[0].accountid.id" class="person-info__godetail">查看详情</router-link>
+					  		</div>	
 				  		</div>
-				  		<div class="person-info">
-				  			<p class="person-info__name">guoguougo</p>
-							<span class="person-info__detail">27岁</span>
-							<span> | </span>
-							<span class="person-info__detail">广东</span>
-							<span> | </span>
-							<span class="person-info__detail">本科</span>
-							<span> | </span>
-							<span class="person-info__detail">5000-10000元</span>
-							<p class="person-info__detail">哎哎哎哎哎哎我哎哎哎啊 </p>
-							<a href=""  class="person-info__godetail">查看详情</a>
-				  		</div>	
-				  	</div></el-col>
-				  	<el-col :span="12"><div class="grid-content">
-				  		<div class="person-img">
-				  			<img src="../../assets/image/person1.jpg" alt="">
-				  		</div>
-				  		<div class="person-info">
-				  			<p class="person-info__name">guoguougo</p>
-							<span class="person-info__detail">27岁</span>
-							<span> | </span>
-							<span class="person-info__detail">广东</span>
-							<span> | </span>
-							<span class="person-info__detail">本科</span>
-							<span> | </span>
-							<span class="person-info__detail">5000-10000元</span>
-							<p class="person-info__detail">哎哎哎哎哎哎我哎哎哎啊 </p>
-							<a href=""  class="person-info__godetail">查看详情</a>
-				  		</div>	
-				  	</div></el-col>
+				  	</el-col>
 				</el-row>
 				<el-pagination
 				    layout="prev, pager, next"
@@ -129,11 +114,13 @@
 	  				}
 	  			],
 	  			popList: [],
+	  			mateList: []
 	  		}
 	  	},
 	  	mounted: function(){
 		 	this.initMe();
 		 	this.initPop();
+		 	this.initMate();
 		},
 		methods: {
 			initMe() {
@@ -171,6 +158,24 @@
 					
 				});
 			},
+			initMate() {
+				this.$http({
+					method: 'get',
+					url: 'mate/getMatePerson',
+					params: {
+						"page": 1,
+						"pageSize": 6
+					}        	   			
+				}).then((response)=>{
+					if(response && response.data.status == 'SUCCESS') {
+						this.mateList = response.data.object.objects;
+					}else {
+						this.$message(response.data.message);
+					}
+				}).catch((err)=>{  
+					
+				});
+			}
 		}
 	}
 </script>

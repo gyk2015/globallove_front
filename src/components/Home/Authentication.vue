@@ -99,7 +99,7 @@
 				}).then((response)=>{
 					if(response && response.data.status == 'SUCCESS') {
 						this.$message(response.data.message);
-
+						this.initMe();
 					}else {
 						this.$message(response.data.message);
 					}

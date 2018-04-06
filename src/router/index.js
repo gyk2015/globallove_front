@@ -21,6 +21,16 @@ import NewsDetail from '@/components/News/NewsDetail'
 import Regist from '@/components/Login/Regist'
 import Authentication from '@/components/Home/Authentication'
 import Email from '@/components/Home/Email'
+import Mate from '@/components/Home/Mate'
+import MyFriend from '@/components/Home/MyFriend'
+import Other from '@/components/Other/Other'
+import OtherPersonalData from '@/components/Other/PersonalData'
+import OtherFamilyInfo from '@/components/Other/FamilyInfo'
+import OtherLifeHabit from '@/components/Other/LifeHabit'
+import OtherEmotional from '@/components/Other/Emotional'
+import OtherPhoto from '@/components/Other/Photo'
+import OtherActivity from '@/components/Other/Activity'
+import OtherMood from '@/components/Other/Mood'
 Vue.use(Router)
 
 export default new Router({
@@ -100,6 +110,16 @@ export default new Router({
                   name: 'email',
                   component: Email
                 },
+                {
+                  path: 'mate',
+                  name: 'mate',
+                  component: Mate
+                },
+                {
+                  path: 'myfriend',
+                  name: 'myfriend',
+                  component: MyFriend
+                }
               ]
             },
             {
@@ -131,6 +151,49 @@ export default new Router({
               path: 'newsDetail',
               name: 'newsDetail',
               component: NewsDetail
+            },
+            {
+              path: 'other',
+              name: 'other',
+              component: Other,
+              children: [
+                {
+                  path: 'personalData',
+                  name: 'personalData',
+                  component: OtherPersonalData
+                },
+                {
+
+                  path: 'familyInfo',
+                  name: 'familyInfo',
+                  component: OtherFamilyInfo
+                },
+                {
+                  path: 'lifeHabit',
+                  name: 'lifeHabit',
+                  component: OtherLifeHabit
+                },
+                {
+                  path: 'emotional',
+                  name: 'emotional',
+                  component: OtherEmotional
+                },
+                {
+                  path: 'photo',
+                  name: 'photo',
+                  component: OtherPhoto
+                },
+                {
+                  path: 'activity',
+                  name: 'activity',
+                  component: OtherActivity
+                },
+                {
+                  path: 'mood',
+                  name: 'mood',
+                  component: OtherMood
+                },
+              ]
             }
 		    ]
     	}

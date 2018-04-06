@@ -6,12 +6,12 @@
 					<!-- <img src="../../assets/image/person1.jpg" alt="" class="user-img"> -->
 					<el-upload
 						class="avatar-uploader"
-						action="http://127.0.0.1:8085/springhibernatespringmvc/baseInfo/setHeadImg"
+						action="http://127.0.0.1:8085/springhibernatespringmvc/account/setHeadImg"
 						:show-file-list="false"
 						:with-credentials="true"
 						:on-success="handleAvatarSuccess"
 						:before-upload="beforeAvatarUpload">
-						<img v-if="imageUrl" :src="imageUrl" class="avatar">
+						<img v-if="me.imageUrl" :src="me.imageUrl" class="avatar">
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 				</div>
@@ -50,7 +50,6 @@
 			          		<router-link to="/base/home/familyInfo"><el-menu-item index="1-2">家庭资料</el-menu-item></router-link>
 			          		<router-link to="/base/home/lifeHabit"><el-menu-item index="1-3">生活习惯</el-menu-item></router-link>
 			          		<router-link to="/base/home/emotional"><el-menu-item index="1-4">情感状况</el-menu-item></router-link>
-			          		<el-menu-item index="1-5">品味生活</el-menu-item>
 			        	</el-menu-item-group>
 			      	</el-submenu>
 			      	<router-link to="/base/home/photo"><el-menu-item index="2">
@@ -62,9 +61,9 @@
 			      	<router-link to="/base/home/activity"><el-menu-item index="4">
 			        	<span slot="title">我的活动</span>
 			      	</el-menu-item></router-link>
-			      	<el-menu-item index="5">
+			      	<router-link to="/base/home/myfriend"><el-menu-item index="5">
 			        	<span slot="title">我的好友</span>
-			      	</el-menu-item>
+			      	</el-menu-item></router-link>
 			      	<router-link to="/base/home/mood"><el-menu-item index="6">
 			        	<span slot="title">我的心情</span>
 			      	</el-menu-item></router-link>
@@ -74,6 +73,9 @@
 			      	<el-menu-item index="8">
 			        	<span slot="title">积分兑换</span>
 			      	</el-menu-item>
+			      	<router-link to="/base/home/mate"><el-menu-item index="9">
+			        	<span slot="title">择偶意向</span>
+			      	</el-menu-item></router-link>
 			   	</el-menu>
 			</div>
 			<div class="content-right">
@@ -101,8 +103,9 @@
 	  	name: 'Home',
 	  	data() {
 	      	return {
-	      		me: {},
-	      		imageUrl: '',
+	      		me: {
+	      			imageUrl: '',
+	      		},
 	      		dialogVisible: false,
 	      		integral: 0,
 	      		lastSign: ''
@@ -129,18 +132,18 @@
 				}).catch((err)=>{  
 					
 				});
-				this.$http({
-					method: 'get',
-					url: 'baseInfo/getHeadImg',   			
-				}).then((response)=>{
-					if(response && response.data.status == 'SUCCESS') {
-						this.imageUrl = response.data.object;
-					}else {
-						this.$message(response.data.message);
-					}
-				}).catch((err)=>{  
+				// this.$http({
+				// 	method: 'get',
+				// 	url: 'baseInfo/getHeadImg',   			
+				// }).then((response)=>{
+				// 	if(response && response.data.status == 'SUCCESS') {
+				// 		this.imageUrl = response.data.object;
+				// 	}else {
+				// 		this.$message(response.data.message);
+				// 	}
+				// }).catch((err)=>{  
 					
-				});
+				// });
 				this.$http({
 					method: 'get',
 					url: 'integral/getIntegral',   			

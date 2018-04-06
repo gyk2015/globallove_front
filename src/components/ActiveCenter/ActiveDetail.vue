@@ -29,7 +29,7 @@
 			<p class="active-join__title">最新报名会员</p>
 			<ul>
 				<li class="participant-list" v-for="item in participantList">
-					<img :src="item.img" alt="">
+					<img :src="item.accountid.headimg" alt="">
 				</li>
 			</ul>
 		</div>
@@ -45,32 +45,13 @@
 	      	return {
 	      		active: {},
 	      		isEnroll: false,
-	      		participantList: [
-	      			{
-	      				img: person1
-	      			},
-	      			{
-	      				img: person1
-	      			},
-	      			{
-	      				img: person1
-	      			},
-	      			{
-	      				img: person1
-	      			},
-	      			{
-	      				img: person1
-	      			},
-	      			{
-	      				img: person1
-	      			},
-	      		],
+	      		participantList: [],
 	      	}
 	    },
 	    mounted: function(){
 	    	this.initActive();
 	    	this.initIsEnroll();
-	    	// this.initActiveEnrollUser();
+	    	this.initActiveEnrollUser();
 		},
 	    methods: {
 	    	initActive() {
@@ -123,12 +104,7 @@
 					}        	   			
 				}).then((response)=>{
 					if(response && response.data.status == 'SUCCESS') {
-						if(response.data.object == null) {
-							this.isEnroll = false;
-						}else {
-							this.isEnroll = true;
-						}
-						console.log(this.isEnroll);
+						this.participantList = response.data.object.objects;
 					}else {
 						this.$message(response.data.message);
 					}
